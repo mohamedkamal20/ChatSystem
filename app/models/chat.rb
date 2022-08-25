@@ -9,4 +9,6 @@ class Chat < ApplicationRecord
 
   validates_uniqueness_of :number, :scope => :application_id
   validates_numericality_of :number
+
+  scope :find_chat, -> (number){ find_by_number(number) }
 end

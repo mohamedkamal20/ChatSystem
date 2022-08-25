@@ -18,6 +18,9 @@ gem 'puma', '~> 3.11'
 
 gem 'active_model_serializers', '~> 0.10.2'
 
+gem 'searchkick', '>= 5.0'
+
+gem 'elasticsearch', '> 7' , '<= 7.4.0'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 

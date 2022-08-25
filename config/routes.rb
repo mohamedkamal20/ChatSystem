@@ -5,8 +5,11 @@ Rails.application.routes.draw do
       resources :applications, defaults: {format: :json} do
         resources :chats ,only: [:index, :show, :update], defaults: {format: :json} do
           resources :messages, only: [:index], defaults: {format: :json}
+          get "messages/search" => "messages#search"
+
         end
       end
+
     end
   end
 end
