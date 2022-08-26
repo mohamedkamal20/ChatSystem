@@ -6,7 +6,6 @@ This is a simple Chat System task that create chat under application and add mes
 * Create CRUD operations for application, chat and messages Endpoints.
 * Search through messages (partially match) of specific chat on elasticSearch db.
 * Run background jobs to update chat count and message count.
-* Handle multiple requests concurrently.
 * Containerize the task.
 ### Requirements
 In order to run the application please follow the steps:
@@ -19,7 +18,7 @@ In order to run the application please follow the steps:
 ### Gem Description
 * [active_model_serializers](https://github.com/rails-api/active_model_serializers) for customize json response. 
 * [searchkick](https://github.com/ankane/searchkick) for search on elasticSearch db and reindexing the model.
-* 
+
 ### Test services
 * ##### Postman or curl command line
   *`/api/v1/applications/ [GET]`\
