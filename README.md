@@ -6,6 +6,7 @@ This is a simple Chat System task that create chat under application and add mes
 * Create CRUD operations for application, chat and messages Endpoints.
 * Search through messages (partially match) of specific chat on elasticSearch db.
 * Run background jobs to update chat count and message count.
+* Consume from RabbitMQ messages sent from Golang endpoints.
 * Containerize the task.
 ### Requirements
 In order to run the application please follow the steps:

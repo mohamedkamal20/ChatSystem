@@ -7,7 +7,6 @@ class UpdateChatsCountJob < ApplicationJob
       application.chats_count = application.chats.count
       application.save
     }
-
-    UpdateChatsCountJob.set(wait: 30.minute).perform_later(nil)
   end
 end
+Sidekiq::Cron::Job.create(name: 'update chats count - every 1min', cron: '*/1 * * * *', class: 'UpdateChatsCountJob')
