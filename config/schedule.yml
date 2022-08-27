@@ -1,9 +1,9 @@
 update_chats_count_job:
-  cron: "*/1 * * * *"    # every minute
+  cron: "*/5 * * * *"    # every 5 minutes
   class: "UpdateChatsCountJob"
   queue: default
 
 update_messages_count_job:
-  cron: "*/1 * * * *"     # every minute
+  cron: "*/5 * * * *"     # every 5 minutes
   class: "UpdateMessagesCountJob"
   queue: default

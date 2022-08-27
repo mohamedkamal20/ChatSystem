@@ -10,4 +10,4 @@ class UpdateMessagesCountJob < ApplicationJob
   end
 end
 
-Sidekiq::Cron::Job.create(name: 'update messages count - every 1min', cron: '*/1 * * * *', class: 'UpdateMessagesCountJob')
+# Sidekiq::Cron::Job.create(name: 'update messages count - every 1min', cron: '*/1 * * * *', class: 'UpdateMessagesCountJob')
