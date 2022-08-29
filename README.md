@@ -19,6 +19,10 @@ In order to run the application please follow the steps:
 ### Gem Description
 * [active_model_serializers](https://github.com/rails-api/active_model_serializers) for customize json response. 
 * [searchkick](https://github.com/ankane/searchkick) for search on elasticSearch db and reindexing the model.
+* [bunny](https://github.com/ruby-amqp/bunny) for rabbitMQ consumer.
+* [sidekiq](https://github.com/mperham/sidekiq) for background jobs using redis.
+* [sidekiq-cron](https://github.com/ondrejbartas/sidekiq-cron) for schedule sidekiq jobs to run every period of time.
+
 
 ### Test services
 * ##### Postman or curl command line
@@ -31,6 +35,7 @@ In order to run the application please follow the steps:
   *`/api/v1/applications/{token}/chats/{id} [PATCH] {"chat_name": "chat_name"}`\
   *`/api/v1/applications/{token}/chats/{chat_id}/messages [GET]`
   *`/api/v1/applications/{token}/chats/{chat_id}/messages/search [GET] {"message":"message"}`
+  *`/api/v1/applications/{token}/chats/{chat_id}/messages/{id} [PATCH] {"message"{"message":"message-text"}}`
 ### Test against Database
 * Iam using MySQL as my main database and elasticSearch for searching messages. 
   
