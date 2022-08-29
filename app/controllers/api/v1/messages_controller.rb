@@ -4,17 +4,18 @@ module Api
 
       #/api/v1/applications/{token}/chats/{chat_id}/messages [GET]
       def index
-        application = Application.find_application(params[:application_id])
+        application_token = params[:application_id]
+        application = Application.find_by_token(application_token)
         if application
-          chat = application.chats.find_chat(params[:chat_id])
+          chat_number = params[:chat_id]
+          chat = application.chats.find_by_number(chat_number)
           if chat
             render json: chat.messages
           else
-            render json:{:message => "chat not found"}, :status => 404
+            render json: {"errors": "This chat number : #{chat_number} does not exist"}, :status => :bad_request
           end
-
         else
-          render json:{:message => "application not found"}, :status => 404
+          render json: {"errors": "This token : #{application_token} does not exist"}, :status => :bad_request
         end
       end
 
@@ -27,71 +28,67 @@ module Api
           result = Message.search(where:{token:token, chat_number:chat_number, message:{like: "%#{message}%"}})
           render json: result
         else
-          render json:{:message => "application token or chat number not valid"}, :status => 404
+          render json: {"errors": " application token or chat number does not exist"}, :status => :bad_request
         end
       end
 
       #/api/v1/applications/{token}/chats/{chat_id}/messages/{id} [GET]
       def show
-        application = Application.find_application(params[:application_id])
+        application_token = params[:application_id]
+        application = Application.find_by_token(application_token)
         if application
-          chat = application.chats.find_chat(params[:chat_id])
+          chat_number = params[:chat_id]
+          chat = application.chats.find_by_number(chat_number)
           if chat
-            message = chat.messages.find_message(params[:id])
+            message_number = params[:id]
+            message = chat.messages.find_by_number(message_number)
             if message
               render json: message
             else
-              render json:{:message => "message not found"}, :status => 404
+              render json: {"errors": "This message number : #{message_number} does not exist"}, :status => :bad_request
             end
           else
-            render json:{:message => "chat not found"}, :status => 404
-          end
-
-        else
-          render json:{:message => "application not found"}, :status => 404
-        end
-      end
-
-      # This endpoint is deprecated just for testing purposes (Golang endpoint)
-      #/api/v1/applications/{token}/chats/{chat_id}/messages [POST] {message":{"message":"message"}}
-      def create
-        application = Application.find_application(params[:application_id])
-        if application
-          chat = application.chats.find_chat(params[:chat_id])
-          if chat
-            message = Message.new(message_params)
-            message.number = chat.messages.count + 1
-            chat.messages << message
-            message.save
-            render json: message
-          else
-            render json:{:message => "chat not found"}, :status => 404
+            render json: {"errors": "This chat number : #{chat_number} does not exist"}, :status => :bad_request
           end
         else
-          render json:{:message => "application not found"}, :status => 404
+          render json: {"errors": "This token : #{application_token} does not exist"}, :status => :bad_request
         end
       end
 
       #/api/v1/applications/{token}/chats/{chat_id}/messages/{id} [PATCH] {"message":{"message":"message"}}
       def update
-        application = Application.find_application(params[:application_id])
+        application_token = params[:application_id]
+        application = Application.find_by_token(application_token)
         if application
-          chat = application.chats.find_chat(params[:chat_id])
+          chat_number = params[:chat_id]
+          chat = application.chats.find_by_number(chat_number)
           if chat
-            message = chat.messages.find_message(params[:id])
-            message.update_attributes(message_params)
-            render json:message
+            message_number = params[:id]
+            message = chat.messages.find_by_number(message_number)
+            if message
+              begin
+                if message.update_attributes(message_params)
+                  render json:message
+                else
+                  render json: message.errors.messages, :status => :bad_request
+                end
+              rescue Exception => err
+                render json: {"errors": "#{err}"}
+              end
+            else
+              render json: {"errors": "This message number : #{message_number} does not exist"}, :status => :bad_request
+            end
           else
-            render json:{:message => "chat not found"}, :status => 404
+            render json: {"errors": "This chat number : #{chat_number} does not exist"}, :status => :bad_request
           end
         else
-          render json:{:message => "application not found"}, :status => 404
+          render json: {"errors": "This token : #{application_token} does not exist"}, :status => :bad_request
         end
       end
 
       private
       def message_params
-        params.require(:message).permit(:message)
+         params.require(:message).permit(:message)
       end
     end
   end

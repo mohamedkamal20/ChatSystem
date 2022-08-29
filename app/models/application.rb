@@ -9,6 +9,4 @@ class Application < ApplicationRecord
   validates :token, :uniqueness => true,
                     :length => {:maximum => 250}
 
-  scope :find_application, -> (token){ find_by_token(token) }
-
 end

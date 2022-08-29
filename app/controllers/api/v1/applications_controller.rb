@@ -10,27 +10,46 @@ module Api
         applications = Application.all
         render json:applications
       end
-
       #/api/v1/applications/{id} [GET]
       def show
-        application = Application.find_application(params[:id])
-        render json:application
+        application_token  = params[:id]
+        application = Application.find_by_token(application_token)
+        if application
+          render json: application
+        else
+          render json: {"errors": "This token : #{application_token} does not exist"}
+        end
       end
 
        #/api/v1/applications/ [POST] {"application_name" : "application_name"}
       def create
-        uuid = SecureRandom.uuid
-        application = Application.new(application_params)
-        application.token = uuid
-        application.save
-        render json:application
+        begin
+          uuid = SecureRandom.uuid
+          application = Application.new(application_params)
+          application.token = uuid
+          if application.save
+            render json:application
+          else
+            render json: application.errors.messages, status: :bad_request
+          end
+        rescue Exception => err
+          render json: {"errors": "#{err}"}, :status => :bad_request
+        end
       end
 
       #/api/v1/applications/{id} [PATCH] {"application_name" : "application_name"}
       def update
-        application = Application.find_application(params[:id])
-        application.update_attributes(application_params)
-        render json:application
+        begin
+          application_token = params[:id]
+          application = Application.find_by_token(application_token)
+          if application.update_attributes(application_params)
+            render json:application
+          else
+            render json: application.errors.messages, status: :bad_request
+          end
+        rescue Exception => err
+          render json: {"errors": "#{err}"}, :status => :bad_request
+        end
       end
 
       private
