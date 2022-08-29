@@ -2,7 +2,7 @@ require 'bunny'
 require 'json'
 
 
-def consume_chat_message
+def consume_chat_from_queue
   connection = Bunny.new(automatically_recover: true )
   connection.start
 
@@ -30,7 +30,7 @@ def consume_chat_message
   end
 end
 
-def consume_message_message
+def consume_message_from_queue
   connection = Bunny.new(automatically_recover: true )
   connection.start
 
@@ -58,7 +58,7 @@ def consume_message_message
   end
 end
 
-Thread.new{consume_chat_message}
+Thread.new{consume_chat_from_queue}
 Thread.abort_on_exception=true
-Thread.new{consume_message_message}
+Thread.new{consume_message_from_queue}
 Thread.abort_on_exception=true
