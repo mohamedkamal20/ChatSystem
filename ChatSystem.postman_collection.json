@@ -1,0 +1,447 @@
+{
+	"info": {
+		"_postman_id": "b5f86fe1-3d2c-4ab2-9e7b-e77bba0b1d82",
+		"name": "ChatSystem",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Golang endpoints",
+			"item": [
+				{
+					"name": "create new chat",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"chat_name\": \"chat_name\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://0.0.0.0:8085/api/v1/applications/{{token}}/chats",
+							"protocol": "http",
+							"host": [
+								"0",
+								"0",
+								"0",
+								"0"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"v1",
+								"applications",
+								"{{token}}",
+								"chats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create new message",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"message\": \"message\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://0.0.0.0:8085/api/v1/applications/{{token}}/chats/{{chat_number}}/messages",
+							"protocol": "http",
+							"host": [
+								"0",
+								"0",
+								"0",
+								"0"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"v1",
+								"applications",
+								"{{token}}",
+								"chats",
+								"{{chat_number}}",
+								"messages"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Rails endpoints",
+			"item": [
+				{
+					"name": "Application",
+					"item": [
+						{
+							"name": "get all applications",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://0.0.0.0:3000/api/v1/applications",
+									"protocol": "http",
+									"host": [
+										"0",
+										"0",
+										"0",
+										"0"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"applications"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get specific application",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://0.0.0.0:3000/api/v1/applications/{{token}}",
+									"protocol": "http",
+									"host": [
+										"0",
+										"0",
+										"0",
+										"0"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"applications",
+										"{{token}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create application",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"application_name\" : \"app_9\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://0.0.0.0:3000/api/v1/applications",
+									"protocol": "http",
+									"host": [
+										"0",
+										"0",
+										"0",
+										"0"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"applications"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update application",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"application_name\" : \"app_9\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://0.0.0.0:3000/api/v1/applications/{{token}}",
+									"protocol": "http",
+									"host": [
+										"0",
+										"0",
+										"0",
+										"0"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"applications",
+										"{{token}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "messages",
+					"item": [
+						{
+							"name": "get all messages",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://0.0.0.0:3000/api/v1/applications/{{token}}/chats/{{chat_number}}/messages",
+									"protocol": "http",
+									"host": [
+										"0",
+										"0",
+										"0",
+										"0"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"applications",
+										"{{token}}",
+										"chats",
+										"{{chat_number}}",
+										"messages"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get specific message",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://0.0.0.0:3000/api/v1/applications/{{token}}/chats/{{chat_number}}/messages/{{message_number}}",
+									"protocol": "http",
+									"host": [
+										"0",
+										"0",
+										"0",
+										"0"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"applications",
+										"{{token}}",
+										"chats",
+										"{{chat_number}}",
+										"messages",
+										"{{message_number}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update message",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"message\": {\n        \"message\": \"test_message\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://0.0.0.0:3000/api/v1/applications/{{token}}/chats/{{chat_number}}/messages/{{message_number}}",
+									"protocol": "http",
+									"host": [
+										"0",
+										"0",
+										"0",
+										"0"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"applications",
+										"{{token}}",
+										"chats",
+										"{{chat_number}}",
+										"messages",
+										"{{message_number}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "search message",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"message\": \"first\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://0.0.0.0:3000/api/v1/applications/{{token}}/chats/{{chat_number}}/messages/search",
+									"protocol": "http",
+									"host": [
+										"0",
+										"0",
+										"0",
+										"0"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"applications",
+										"{{token}}",
+										"chats",
+										"{{chat_number}}",
+										"messages",
+										"search"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Chat",
+					"item": [
+						{
+							"name": "get all chats",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://0.0.0.0:3000/api/v1/applications/{{token}}/chats",
+									"protocol": "http",
+									"host": [
+										"0",
+										"0",
+										"0",
+										"0"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"applications",
+										"{{token}}",
+										"chats"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get specific chat",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://0.0.0.0:3000/api/v1/applications/{{token}}/chats/{{chat_number}}",
+									"protocol": "http",
+									"host": [
+										"0",
+										"0",
+										"0",
+										"0"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"applications",
+										"{{token}}",
+										"chats",
+										"{{chat_number}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update application",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"chat_name\" : \"chat_9\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://0.0.0.0:3000/api/v1/applications/{{token}}/chats/{{chat_number}}",
+									"protocol": "http",
+									"host": [
+										"0",
+										"0",
+										"0",
+										"0"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"applications",
+										"{{token}}",
+										"chats",
+										"{{chat_number}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
