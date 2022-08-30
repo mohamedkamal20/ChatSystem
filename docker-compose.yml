@@ -76,6 +76,7 @@ services:
       - elasticsearch
   sidekiq:
     build: .
+    container_name: sidekiq
     command: bundle exec sidekiq
     volumes:
       - .:/ChatSystem
