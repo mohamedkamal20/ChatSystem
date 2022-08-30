@@ -4,12 +4,10 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :applications,only: [:index, :show, :update, :create], defaults: {format: :json} do
         resources :chats ,only: [:index, :show, :update], defaults: {format: :json} do
-          resources :messages, only: [:index, :show, :update], defaults: {format: :json}
           get "messages/search" => "messages#search"
-
+          resources :messages, only: [:index, :show, :update], defaults: {format: :json}
         end
       end
-
     end
   end
 end

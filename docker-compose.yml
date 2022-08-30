@@ -1,7 +1,9 @@
-version: "3.7"
+version: "3.9"
+
 services:
   db:
     image: mysql:5.7
+    container_name: mySql
     volumes:
       - db_data:/var/lib/mysql
     restart: always
@@ -10,11 +12,8 @@ services:
       MYSQL_DATABASE: application
       MYSQL_USER: admin
       MYSQL_PASSWORD: admin
-    networks:
-      - wpsite
     ports:
       - 3306:3306
-    # phpmyadmin
   phpmyadmin:
     depends_on:
       - db
@@ -25,19 +24,19 @@ services:
     environment:
       PMA_HOST: db
       MYSQL_ROOT_PASSWORD: password
-    networks:
-      - wpsite
   redis:
     image: redis:4.0-alpine
+    container_name: redis
     command: redis-server
     volumes:
       - redis:/data
     ports:
-      - 6379:6379
+      - "6379:6379"
     logging:
       driver: none
   rabbitmq:
     image: "rabbitmq:3-management"
+    container_name: rabbitMQ
     hostname: "rabbit"
     ports:
       - "15672:15672"
@@ -48,7 +47,7 @@ services:
       - ./rabbitmq-isolated.conf:/etc/rabbitmq/rabbitmq.config
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
-    container_name: elasticsearch
+    container_name: elasticSearch
     environment:
       - xpack.security.enabled=false
       - discovery.type=single-node
@@ -64,15 +63,15 @@ services:
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
     ports:
-      - 9200:9200
-      - 9300:9300
+      - "9200:9200"
+      - "9300:9300"
   kibana:
     container_name: kibana
     image: docker.elastic.co/kibana/kibana:7.4.0
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
     ports:
-      - 5601:5601
+      - "5601:5601"
     depends_on:
       - elasticsearch
   sidekiq:
@@ -80,13 +79,11 @@ services:
     command: bundle exec sidekiq
     volumes:
       - .:/ChatSystem
-    environment:
-      RAILS_ENV: development
     depends_on:
-      - "db"
       - "redis"
   web:
     build: .
+    container_name: ChatSystemApp
     command: bundle exec rails s -p 3000 -e development -b '0.0.0.0'
     environment:
       RAILS_MAX_THREADS: 5
@@ -100,11 +97,19 @@ services:
       - "redis"
       - "rabbitmq"
       - "elasticsearch"
-networks:
-  wpsite:
+      - "sidekiq"
+  app:
+    build:
+      context: ./chatSystemGoAPIs
+      dockerfile: Dockerfile
+    container_name: GoLangAPIs
+    ports:
+      - "8085:8085"
+    restart: unless-stopped
+    depends_on:
+      - "web"
 volumes:
   db_data:
-  db:
   bundle:
   redis:
   elasticsearch-data:

@@ -1,0 +1,1 @@
+ENV["ELASTICSEARCH_URL"] = "elasticSearch:9200"
