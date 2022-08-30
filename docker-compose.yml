@@ -1,0 +1,101 @@
+version: "3.7"
+services:
+  db:
+    image: mysql:5.7
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: application
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+    networks:
+      - wpsite
+    ports:
+      - 3306:3306
+    # phpmyadmin
+  phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - '8080:80'
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: password
+    networks:
+      - wpsite
+  redis:
+    image: redis:4.0-alpine
+    command: redis-server
+    volumes:
+      - redis:/data
+    ports:
+      - 6379:6379
+    logging:
+      driver: none
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    hostname: "rabbit"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    labels:
+      NAME: "rabbitmq"
+    volumes:
+      - ./rabbitmq-isolated.conf:/etc/rabbitmq/rabbitmq.config
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
+    container_name: elasticsearch
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:7.4.0
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+  web:
+    build: .
+    command: bundle exec rails s -p 3000 -e development -b '0.0.0.0'
+    environment:
+      RAILS_MAX_THREADS: 5
+    volumes:
+      - .:/ChatSystem
+      - bundle:/bundle
+    ports:
+      - "3000:3000"
+    depends_on:
+      - "db"
+      - "redis"
+      - "rabbitmq"
+      - "elasticsearch"
+networks:
+  wpsite:
+volumes:
+  db_data:
+  db:
+  bundle:
+  redis:
+  elasticsearch-data:
+    driver: local
