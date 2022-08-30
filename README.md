@@ -7,13 +7,15 @@ This is a simple Chat System task that create chat under application and add mes
 * Search through messages (partially match) of specific chat on elasticSearch db.
 * Run background jobs to update chat count and message count.
 * Consume from RabbitMQ messages sent from Golang endpoints.
+* Create Golang endpoints for Chat and Message to concurrency, see readme file by navigating to chatSystemGoAPIs folder.
 * Containerize the task.
 ### Requirements
 In order to run the application please follow the steps:
 - Ubuntu running OS.
 ### Quick start
 * Clone the project.
-* run docker-compose up the docker file.
+* Import `ChatSystem.postman_collection.json` to your postman.
+* run `sudo docker-compose up --build -d`.
 
 
 ### Gem Description
