@@ -22,13 +22,15 @@ In order to run the application please follow the steps:
 ### Quick start
 * Clone the project.
 * Import `ChatSystem.postman_collection.json` to your postman.
+* Run `sudo docker-compose rm -f` to make sure no images cached.
+* Run `sudo docker-compose pull` .
 * Run `sudo docker-compose up --build -d`.
-* Run `sudo docker exec -it mySql sh`.
+* Run `sudo docker exec -it mySql sh` to create Database.
   * Inside shel run `mysql -u root -h mySql --password=root`.
   * `CREATE DATABASE IF NOT EXISTS ChatSystem_development;` 
   * `exit`.
 * Exit mySql shel by run `exit`
-* Run `sudo docker exec -it ChatSystemApp sh`.
+* Run `sudo docker exec -it ChatSystemApp sh` to run Database migrations.
   * Inside shel run`rails db:migrate`. 
   * `exit`. 
 
