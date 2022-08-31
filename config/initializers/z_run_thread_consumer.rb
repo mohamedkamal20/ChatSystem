@@ -3,7 +3,12 @@ require 'json'
 
 
 def consume_chat_from_queue
-  connection = Bunny.new(:host => "rabbitMQ",automatically_recover: true )
+  connection = Bunny.new(:host => ENV.fetch("RABBITMQ_HOST"),
+                         :port => "5672",
+                         :vhost => "/",
+                         :user => ENV.fetch("RABBITMQ_USER"),
+                         :pass => ENV.fetch("RABBITMQ_PASSWORD"),
+                         automatically_recover: true )
   connection.start
 
   channel = connection.create_channel
@@ -31,7 +36,12 @@ def consume_chat_from_queue
 end
 
 def consume_message_from_queue
-  connection = Bunny.new(:host => "rabbitMQ" ,automatically_recover: true )
+  connection = Bunny.new(:host => ENV.fetch("RABBITMQ_HOST"),
+                         :port => ENV.fetch("RABBITMQ_PORT"),
+                         :vhost => "/",
+                         :user => ENV.fetch("RABBITMQ_USER"),
+                         :pass => ENV.fetch("RABBITMQ_PASSWORD"),
+                         automatically_recover: true )
   connection.start
 
   channel = connection.create_channel

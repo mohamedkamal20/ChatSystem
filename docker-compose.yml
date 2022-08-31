@@ -37,12 +37,9 @@ services:
   rabbitmq:
     image: "rabbitmq:3-management"
     container_name: rabbitMQ
-    hostname: "rabbit"
     ports:
       - "15672:15672"
       - "5672:5672"
-    labels:
-      NAME: "rabbitmq"
     volumes:
       - ./rabbitmq-isolated.conf:/etc/rabbitmq/rabbitmq.config
   elasticsearch:
@@ -78,16 +75,30 @@ services:
     build: .
     container_name: sidekiq
     command: bundle exec sidekiq
+    environment:
+      RABBITMQ_HOST: "rabbitMQ"
+      RABBITMQ_USER: "guest"
+      RABBITMQ_PASSWORD: "guest"
+      RABBITMQ_PORT: "5672"
+      REDIS_URL_SIDEKIQ: "redis://redis:6379/0"
+      ELASTICSEARCH_URL: "elasticSearch:9200"
     volumes:
       - .:/ChatSystem
     depends_on:
       - "redis"
+      - "web"
   web:
     build: .
     container_name: ChatSystemApp
     command: bundle exec rails s -p 3000 -e development -b '0.0.0.0'
     environment:
       RAILS_MAX_THREADS: 5
+      RABBITMQ_HOST: "rabbitMQ"
+      RABBITMQ_USER: "guest"
+      RABBITMQ_PASSWORD: "guest"
+      RABBITMQ_PORT: "5672"
+      REDIS_URL_SIDEKIQ: "redis://redis:6379/0"
+      ELASTICSEARCH_URL: "elasticSearch:9200"
     volumes:
       - .:/ChatSystem
       - bundle:/bundle
@@ -98,7 +109,6 @@ services:
       - "redis"
       - "rabbitmq"
       - "elasticsearch"
-      - "sidekiq"
   app:
     build:
       context: ./chatSystemGoAPIs
