@@ -12,10 +12,25 @@ This is a simple Chat System task that create chat under application and add mes
 ### Requirements
 In order to run the application please follow the steps:
 - Ubuntu running OS.
+- Make sure there ports are not used by another process:
+  * port `3000` for rails application.
+  * port `8085` for goLang application.
+  * port `3307` for default mysql port.
+  * port `9200` for default elasticSearch port.
+  * port `6379` for default redis port.
+  * port `5672` for default rabbitMQ port.
 ### Quick start
 * Clone the project.
 * Import `ChatSystem.postman_collection.json` to your postman.
-* run `sudo docker-compose up --build -d`.
+* Run `sudo docker-compose up --build -d`.
+* Run `sudo docker exec -it mySql sh`.
+  * Inside shel run `mysql -u root -h mySql --password=root`.
+  * `CREATE DATABASE IF NOT EXISTS ChatSystem_development;` 
+  * `exit`.
+* Exit mySql shel by run `exit`
+* Run `sudo docker exec -it ChatSystemApp sh`.
+  * Inside shel run`rails db:migrate`. 
+  * `exit`. 
 
 
 ### Gem Description
