@@ -42,6 +42,7 @@ In order to run the application please follow the steps:
 * [bunny](https://github.com/ruby-amqp/bunny) for rabbitMQ consumer.
 * [sidekiq](https://github.com/mperham/sidekiq) for background jobs using redis.
 * [sidekiq-cron](https://github.com/ondrejbartas/sidekiq-cron) for schedule sidekiq jobs to run every period of time.
+* [rspec-rails](https://github.com/rspec/rspec-rails) for create unit and integration tests.
 
 
 ### Test services
