@@ -8,6 +8,7 @@ This is a simple Chat System task that create chat under application and add mes
 * Run background jobs to update chat count and message count.
 * Consume from RabbitMQ messages sent from Golang endpoints.
 * Create Golang endpoints for Chat and Message to concurrency, see readme file by navigating to chatSystemGoAPIs folder.
+* Write happy path unit testing using rspec gem.
 * Containerize the task.
 ### Requirements
 In order to run the application please follow the steps:
